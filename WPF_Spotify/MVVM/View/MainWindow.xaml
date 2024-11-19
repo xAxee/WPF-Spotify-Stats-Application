@@ -1,0 +1,114 @@
+﻿<Window x:Class="WPF_Spotify.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Spotify"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Background="Transparent" WindowStyle="None" AllowsTransparency="True">
+    <Border CornerRadius="20" BorderThickness="2">
+        <Border.BorderBrush>
+            <SolidColorBrush Color="#FF1DB954"></SolidColorBrush>
+        </Border.BorderBrush>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Border CornerRadius="20,0,0,20" Grid.Column="0" BorderThickness="1">
+                <Border.Background>
+                    <SolidColorBrush Color="Black"></SolidColorBrush>
+                </Border.Background>
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="Black"></SolidColorBrush>
+                </Border.BorderBrush>
+            
+                <!-- Menu -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Cursor="">
+                        <!-- Logo -->
+                        <StackPanel Orientation="Horizontal" Height="35" Margin="15,25,0,40">
+                            <TextBlock FontWeight="Bold" FontSize="20" Foreground="snow" Text="Spoti Stats"></TextBlock>
+                        </StackPanel>
+                        <!-- Options -->
+                        <RadioButton GroupName="menu_radio" Style="{StaticResource menuButton}" Command="{Binding NavigateToHomeViewCommand}" Content="User Stats" IsChecked="True"></RadioButton>
+                        <RadioButton GroupName="menu_radio" Style="{StaticResource menuButton}" Command="{Binding NavigateToRecentlyPlayedViewCommand}" Content="Recentrly Played"></RadioButton>
+                        <RadioButton GroupName="menu_radio" Style="{StaticResource menuButton}" Command="{Binding NavigateToArtistViewCommand}" Content="Top Artists"></RadioButton>
+                        <RadioButton GroupName="menu_radio" Style="{StaticResource menuButton}" Command="{Binding NavigateToTrackViewCommand}" Content="Top Tracks"></RadioButton>
+                                     
+                    </StackPanel>    
+                    <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="#FF1F1F1F">
+                        <RadioButton GroupName="menu_radio" Style="{StaticResource menuButton_about}" Command="{Binding NavigateToAboutViewCommand}" Content="About"></RadioButton>
+                    </Border>
+                </Grid>
+            </Border>
+            <!-- Main -->
+            <Border CornerRadius="0,20,20,0" Grid.Column="1">
+                <Border.Background>
+                    <SolidColorBrush Color="#212121"/>
+                </Border.Background>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!-- Control bar -->
+                        <RowDefinition Height="25"/>
+                        <!-- Header -->
+                        <RowDefinition Height="25"/>
+                        <!-- Content -->
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Control bar -->
+                    <Border Grid.Row="0" CornerRadius="0,20,0,0" BorderThickness="0,0,0,1">
+                        <Border.Background>
+                            <SolidColorBrush Color="#FF1D1D1D"/>
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#FF1D1D1D"></SolidColorBrush>
+                        </Border.BorderBrush>
+                        <StackPanel x:Name="ControlBar"
+                                    Orientation="Horizontal"
+                                    FlowDirection="RightToLeft"
+                                    Background="Transparent"
+                                    Margin="0,0,5,0"
+                                    MouseLeftButtonDown="ControlBar_MouseLeftButtonDown"
+                                    MouseEnter="ControlBar_MouseEnter">
+                            <Button x:Name="ControlBar_Close" Style="{StaticResource controlButton}" FontFamily="{StaticResource FaSolid}" Content="&#xf00d;" Click="ControlBar_Close_Click" FontSize="18" Cursor="Hand"/>
+                            <Button x:Name="ControlBar_Resize" Style="{StaticResource controlButton}" FontFamily="{StaticResource FaSolid}" Content="&#xf2d2;" Click="ControlBar_Resize_Click"/>
+                            <Button x:Name="ControlBar_Minimalize" Style="{StaticResource controlButton}" FontFamily="{StaticResource FaSolid}" Content="&#xf2d1;" Click="ControlBar_Minimalize_Click"/>
+                        </StackPanel>
+                    </Border>
+                    <!-- Header -->
+                    <Border Grid.Row="1" BorderThickness="0,0,0,1">
+                        <Border.Background>
+                            <SolidColorBrush Color="#FF1D1D1D"/>
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="Black"></SolidColorBrush>
+                        </Border.BorderBrush>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource headerInfo}" Grid.Column="3" Text="{Binding Profile.DisplayName}"></TextBlock>
+                            <TextBlock Style="{StaticResource headerInfo}" Grid.Column="4" Text="{Binding Profile.Email}"></TextBlock>
+                            <Button Style="{StaticResource header_button}" Grid.Column="0" Content="{Binding IconMusic}" FontFamily="{StaticResource FaSolid}" Command="{Binding SwitchPlaying}"/>
+                            <TextBlock Style="{StaticResource headerTrackInfo}" Grid.Column="1" Text="{Binding CurrentPlaying}" />
+                        </Grid>
+                    </Border>
+                    <!-- Content section -->
+                    <ContentControl Content="{Binding Navigation.CurrentView}" Grid.Row="2" Margin="10"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

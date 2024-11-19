@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="WPF_Spotify.MVVM.View.ArtistView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_Spotify.MVVM.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="container">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Style="{StaticResource time_button}" Content="last 4 Weeks" Command="{Binding Time4WeeksCommand}"/>
+            <Button Grid.Column="1" Style="{StaticResource time_button}" Content="last 6 months" Command="{Binding Time6MonthsCommand}"/>
+            <Button Grid.Column="2" Style="{StaticResource time_button}" Content="all times" Command="{Binding TimeAllCommand}"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="25" />
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Style="{StaticResource listView_header_artist}"></TextBlock>
+            <TextBlock Grid.Column="1" Style="{StaticResource listView_header_artist}" Margin="0">Lp.</TextBlock>
+            <TextBlock Grid.Column="2" Style="{StaticResource listView_header_artist}"></TextBlock>
+            <TextBlock Grid.Column="3" Style="{StaticResource listView_header_artist}">Pseudonim</TextBlock>
+            <TextBlock Grid.Column="4" Style="{StaticResource listView_header_artist}">Top track in top 50</TextBlock>
+            <TextBlock Grid.Column="5" Style="{StaticResource listView_header_artist}">Followers</TextBlock>
+        </Grid>
+        <ListView Grid.Row="2" ItemsSource="{Binding Artists}" Style="{StaticResource listView_style}" AlternationCount="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="3">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="25" />
+                                <ColumnDefinition Width="25"/>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Style="{StaticResource listView_details}" FontSize="10px" FontFamily="{StaticResource FaSolid}" Text="{Binding Trend.Icon}" Foreground="{Binding Trend.Color}" FontWeight="Bold" Margin="0" ToolTip="{Binding Trend.View}"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Lp}" FontWeight="Bold" VerticalAlignment="Center"/>
+                            <Image Grid.Column="2" Source="{Binding Images[0].Url}"/>
+                            <TextBlock Grid.Column="3" Style="{StaticResource listView_details}" Foreground="Snow" Text="{Binding Name}"/>
+                            <TextBlock Grid.Column="4" Style="{StaticResource listView_details}" Foreground="Gray" Text="{Binding Top}"/>
+                            <TextBlock Grid.Column="5" Style="{StaticResource listView_details}" Foreground="Gray" Text="{Binding TotalFollowers, StringFormat={}{0:N0}}"/>
+                        
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</UserControl>
